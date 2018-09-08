@@ -1,0 +1,63 @@
+body{
+    font-family: "Microsoft YaHei", "仿宋", serif;
+    font-size: 13px;
+}
+
+.search-con{
+    padding:0 15px 10px 0px;
+}
+
+.box-border{
+    border: solid 1px #efefef;
+    border-radius: 3px;
+}
+
+.vod-block-status{
+    display: inline-block;
+    text-align: center;
+    width: 90px;
+}
+
+@media (min-width: 900px) {
+    .search-con > .form-group {
+        margin-right: 10px;
+    }
+}
+
+/* 必需 */
+.expand-transition {
+    transition: all .1s ease;
+    /*height: 30px;*/
+    /*padding: 10px;*/
+    /*overflow: hidden;*/
+}
+
+/* .expand-enter 定义进入的开始状态 */
+/* .expand-leave 定义离开的结束状态 */
+.expand-enter .expand-leave {
+    height: 0;
+    /*padding: 5px 5px;*/
+    opacity: 0;
+}
+
+.table th, .table td {
+    vertical-align: middle;
+}
+
+.list-thumbnail{
+    height:50px;
+    margin:-7px;
+    border-radius: 2px;
+}
+
+.date-range {
+    min-width: 174px;
+    min-width: 174px;
+}
+
+/*.fp-player > a {*/
+    /*display: none !important;*/
+/*}*/
+/*.fp-brand{*/
+    /*display: none !important;*/
+/*}*/

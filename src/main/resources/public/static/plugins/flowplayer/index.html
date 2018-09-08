@@ -1,0 +1,45 @@
+<!doctype html>
+
+<head>
+
+   <!-- player skin -->
+   <link rel="stylesheet" href="skin/functional.css">
+
+   <!-- site specific styling -->
+   <style>
+   body { font: 12px "Myriad Pro", "Lucida Grande", sans-serif; text-align: center; padding-top: 5%; }
+   .flowplayer { width: 80%; }
+   </style>
+
+   <!-- for video tag based installs flowplayer depends on jQuery 1.7.2+ -->
+   <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+
+   <!-- include flowplayer -->
+   <script src="flowplayer.min.js"></script>
+
+</head>
+
+<body>
+
+   <div class="flowplayer" data-rtmp="rtmp://115.231.238.49:1935/live/54550639a5e044c98ac4fbf27c773f3c" data-ratio="0.4167">
+
+      <video>
+         <source type="video/webm" src="//edge.flowplayer.org/bauhaus.webm">
+         <source type="video/mp4"  src="//edge.flowplayer.org/bauhaus.mp4">
+      </video>
+
+   </div>
+
+   <p class="info">Playing <span id="videosrc">&nbsp;</span></p>
+
+
+
+<script>
+   flowplayer(function (api) {
+      api.on("load", function (e, api, video) {
+         $("#videosrc").text(video.src);
+      });
+   });
+</script>
+
+</body>

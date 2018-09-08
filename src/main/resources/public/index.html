@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>点直播管理后台</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="static/bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="static/plugins/smoke/css/smoke.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="static/plugins/datatables/dataTables.bootstrap.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="static/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <!--<link rel="stylesheet" href="static/css/ionicons.min.css">-->
+  <!-- Theme style -->
+  <link rel="stylesheet" href="static/dist/css/AdminLTE.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="static/dist/css/skins/_all-skins.css">
+
+  <link rel="stylesheet" href="static/plugins/datepicker/datepicker3.css">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="static/plugins/daterangepicker/daterangepicker.css">
+  <!--flowplayer-->
+  <link rel="stylesheet" href="static/plugins/flowplayer/skin/functional.css">
+  <link rel="stylesheet" href="static/plugins/flowplayer/skin/flowplayer.quality-selector.css">
+  <link rel="stylesheet" href="static/plugins/flowplayer/skin/flowplayer.speed-selector.css">
+  <link rel="stylesheet" href="static/plugins/daterangepicker/daterangepicker.css">
+  <link rel="stylesheet" href="static/plugins/flowplayer/skin/flowplayer.seek-selector.css">
+
+
+  <link rel="stylesheet" href="static/css/index.css">
+
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+
+<div class="wrapper">
+
+  <header class="main-header">
+    <!-- Logo -->
+    <a href="/" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><li class="fa fa-dashboard"></li></span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><li class="fa fa-dashboard"></li><b>&nbsp;点直播管理后台</b></span>
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+            <!--logout-->
+            <li>
+                <a id="logoutLnk" href="#" title="退出系统" ><i class="fa fa-sign-out"></i></a>
+            </li>
+          <!-- Control Sidebar Toggle Button -->
+          <li>
+            <a href="#" data-toggle="control-sidebar" title="主题"><i class="fa fa-gears"></i></a>
+          </li>
+          <!-- account info -->
+          <li id="accountinfo">
+            <a style="color:#fff;"></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu hidden">
+        <li class="header">主导航</li>
+
+        <li v-if="isAdmin||isSingleAudit||isBatchAudit">
+          <a href="#vod-audit" data-ref="http://admin.cloud.pptv.com/public/index.php/ppcloudplay-video/video-list-page">
+          	<i class="fa fa-check-square-o"></i> <span>点播审核</span>
+          </a>
+        </li>
+        <li><a href="#vods"><i class="fa fa-youtube-play"></i> <span>点播状态</span></a></li>
+        <li><a href="#lives"><i class="fa fa-video-camera"></i> <span>直播状态</span></a></li>
+
+        <li class="header">系统管理</li>
+        <li>
+          <a href="#logs"><i class="fa fa-history"></i> <span>系统日志</span></a>
+        </li>
+        <li v-if="isAdmin">
+          <a href="#admin-users"><i class="fa fa-user"></i> <span>用户角色</span></a>
+        </li>
+        <li v-if="isAdmin">
+          <a href="#review-conf"><i class="fa fa-check-square-o"></i> <span>审核配置</span></a>
+        </li>
+        <li v-if="isAdmin||isBatchAudit">
+          <a href="#aduit-statistics"><i class="fa  fa-star-o"></i><span>审核统计</span></a>
+        </li>
+      </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <div class="content-wrapper">
+
+    <section id="content" class="content">
+
+    </section>
+  </div>
+
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Create the tabs -->
+    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div id="control-sidebar-home-tab" class="tab-pane">
+        <!--deleted-->
+      </div>
+      <!-- Stats tab content -->
+      <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+      <!-- /.tab-pane -->
+    </div>
+  </aside>
+
+  <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+
+<form id="logoutForm" action="logout" style="height: 0px; height: 0px;" method="post">
+  <input id="hideCsrfVal" type="text" name="_csrf" style="display: none;">
+</form>
+
+<!-- jQuery 2.2.3 -->
+<script src="static/plugins/jQuery/jquery-2.2.3.min.js"></script>
+
+<!-- Bootstrap 3.3.6 -->
+<script src="static/bootstrap/js/bootstrap.min.js"></script>
+<script src="static/plugins/datatables/jquery.dataTables.js"></script>
+<script src="static/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<!-- daterangepicker -->
+<script src="static/plugins/moment.min.js"></script>
+<script src="static/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- datepicker -->
+<script src="static/plugins/datepicker/bootstrap-datepicker.js"></script>
+<script src="static/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- Slimscroll -->
+<script src="static/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+
+<!--SMOKE-->
+<script src="static/plugins/smoke/js/smoke.js"></script>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="static/plugins/html5shiv.min.js"></script>
+<script src="static/plugins/respond.min.js"></script>
+<![endif]-->
+
+<script src="static/plugins/vue.js"></script>
+<!--flowplayer-->
+<script src="static/plugins/flowplayer/flowplayer.js"></script>
+<script src="static/plugins/flowplayer/flowplayer.quality-selector.js"></script>
+<script src="static/plugins/flowplayer/flowplayer.speed.js"></script>
+<script src="static/plugins/flowplayer/flowplayer.seekdelta.js"></script>
+<!--<script src="static/plugins/flowplayer/hlsjs.min.js"></script>-->
+
+<!-- AdminLTE App -->
+<script src="static/dist/js/app.js"></script>
+<script src="static/dist/js/rightCtr.js"></script>
+
+<script src="static/js/SPA.js"></script>
+<script src="static/js/index.js"></script>
+<script src="static/js/vods-ctrl.js"></script>
+<script src="static/js/lives-ctrl.js"></script>
+<script src="static/js/users-ctrl.js"></script>
+<script src="static/js/audit-ctrl.js"></script>
+<script src="static/js/review-conf-ctrl.js"></script>
+<script src="static/js/logs-ctrl.js"></script>
+<script src="static/js/audit-statistics-ctrl.js"></script>
+
+
+
+</body>
+</html>

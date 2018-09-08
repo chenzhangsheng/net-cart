@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.network.driver.persistence.dao.WxUserDao">
+
+    <sql id="Base_Column_List" >
+         wx_id, wx_name,wx_gender,wx_avatar_url, wx_phone, wx_city,wx_province,
+         cart_name,cart_id_number,cart_create_license,cart_number,cart_brand,cart_owner,cart_approve,cart_create_time,
+         cart_license_image_front,cart_license_image_back,cart_drive_license_image_front,cart_drive_license_image_back,
+         share_count,create_time, last_modified_time
+    </sql>
+
+    <select id="getByOpenId" resultType="WxUser">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user WHERE wx_id = #{wxId}
+    </select>
+
+    <select id="findUserList" resultType="WxUser">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM admin
+    </select>
+
+    <insert id="save" parameterType="WxUser">
+
+        <!--<if test="wxId!=null and wxId!=''">-->
+            <!--update-->
+            <!--`user` set-->
+            <!--<include refid="updateUser-Set"></include>-->
+        <!--</if>-->
+        insert into `user` (
+        <include refid="Base_Column_List"/>
+        )
+        values
+        (#{wxId},#{wxName},#{wxGender},#{wxAvatarUrl},#{wxPhone},#{wxCity},#{wxProvince},#{cartName},
+        #{cartIdNumber},#{cartCreateLicense},#{cartNumber},#{cartBrand},#{cartOwner},#{cartApprove},#{cartCreateTime},#{cartLicenseImageFront},#{cartLicenseImageBack},#{cartDriveLicenseImageFront},#{cartDriveLicenseImageBack},
+        #{shareCount},CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)
+    </insert>
+
+    <update id="update" parameterType="WxUser">
+        update
+        `user`  set
+        <include refid="updateUser-Set"></include>
+        where wx_id = #{wxId}
+    </update>
+
+    <sql id="updateUser-Set">
+        <if test="wxName!=null and wxName!=''">wx_name=#{wxName},</if>
+        <if test="wxGender!=null and wxGender!=''">wx_gender=#{wxGender},</if>
+        <if test="wxAvatarUrl!=null and wxAvatarUrl!=''">wx_avatar_url=#{wxAvatarUrl},</if>
+        <if test="wxPhone!=null and wxPhone!=''">wx_phone=#{wxPhone},</if>
+        <if test="wxCity!=null and wxCity!=''">wx_city=#{wxCity},</if>
+        <if test="wxProvince!=null and wxProvince!=''">wx_province=#{wxProvince},</if>
+
+        <if test="cartName!=null and cartName!=''">cart_name=#{cartName},</if>
+        <if test="cartIdNumber!=null and cartIdNumber!=''">cart_id_number=#{cartIdNumber},</if>
+        <if test="cartCreateLicense!=null and cartCreateLicense!=''">cart_create_license=#{cartCreateLicense},</if>
+        <if test="cartNumber!=null and cartNumber!=''">cart_number=#{cartNumber},</if>
+        <if test="cartBrand!=null and cartBrand!=''">cart_brand=#{cartBrand},</if>
+        <if test="cartOwner!=null and cartOwner!=''">cart_owner=#{cartOwner},</if>
+        <if test="cartApprove!=null and cartApprove!=''">cart_approve=#{cartApprove},</if>
+        <if test="cartCreateTime!=null and cartCreateTime!=''">cart_create_time=#{cartCreateTime},</if>
+        <if test="cartLicenseImageFront!=null and cartLicenseImageFront!=''">cart_license_image_front=#{cartLicenseImageFront},</if>
+        <if test="cartLicenseImageBack!=null and cartLicenseImageBack!=''">cart_license_image_back=#{cartLicenseImageBack},</if>
+
+        <if test="cartDriveLicenseImageFront!=null and cartDriveLicenseImageFront!=''">cart_drive_license_image_front=#{cartDriveLicenseImageFront},</if>
+        <if test="cartDriveLicenseImageBack!=null and cartDriveLicenseImageBack!=''">cart_drive_license_image_back=#{cartDriveLicenseImageBack},</if>
+
+        <if test="shareCount>0 ">share_count=#{shareCount},</if>
+        last_modified_time=CURRENT_TIMESTAMP
+    </sql>
+
+</mapper>

@@ -1,0 +1,1 @@
+mvn install:install-file -Dfile=D:\项目资料\网约车\net-cart\conf\weixin-common.jar -DgroupId=cn.com.riversoft -DartifactId=weixin-common -Dversion=1.0 -Dpackaging=jar

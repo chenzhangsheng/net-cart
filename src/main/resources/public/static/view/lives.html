@@ -1,0 +1,303 @@
+<div id="livesView" class="" style="">
+    <!-- Content Header (Page header) -->
+    <ol class="breadcrumb">
+
+        <li class="">
+            <a id="livesHome" href="javascript:void(0);" @click="backHome" title="回到直播列表">
+             	<div id="liveStatusTitle">
+	                <i class="fa fa-video-camera fa-2x"></i>
+	                <h2 class="inline">直播状态</h2>
+                </div>
+            </a>
+        </li>
+        <li v-show="!showList" class="active">直播详情</li>
+    </ol>
+    <div v-show="showList" id="livesSearch" style="">
+
+        <form class="form-inline search-con" role="form">
+            <div class="form-group" title="若使用频道ID查询，其他条件忽略">
+                <label for="cidInput" class="">频道ID:</label>
+                <input id="cidInput" class="form-control input-sm" type="number" placeholder="频道CID">
+            </div>
+            <div class="form-group">
+                <label for="cpSel" class="">来源:</label>
+                <select id="cpSel" class="form-control input-sm">
+                    <option value="ppcloud">PP云</option>
+                    <option value="source_media">媒资</option>
+                    <option value="pgc">PGC</option>
+                    <option value="1717wan">1717玩</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="" for="statusCkbxGrp">状态:</label>
+                <div class="form-control input-sm" id="statusCkbxGrp">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="notstart"> 未开始
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="init,preview,living,pause,broken"> 直播中
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="stopped,sysdeleted,deleted"> 已结束
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="timeTypeSel" class="">限时/24小时:</label>
+                <select id="timeTypeSel" class="form-control input-sm">
+                    <option value="">全部</option>
+                    <option value="true">限时直播</option>
+                    <option value="false">24小时直播</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="createDateSel" class="">创建时间:</label>
+                <div id="createDateSel" class="input-group" title="">
+                        <span class="add-on input-group-addon"><i
+                                class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+                    <input type="text" name="daterange" class="form-control input-sm date-range">
+                </div>
+            </div>
+
+            <div class="form-group"><input id="btn-search" class="btn btn-block btn-primary btn-sm btn-flat"
+                                           type="button" value="搜索"></div>
+        </form>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary" style="min-height: 200px;">
+
+                    <div class="box-body">
+                        <table id="liveTable" class="table table-hover" width="100%">
+                            <thead>
+                            <tr>
+                                <th>截图</th>
+                                <th title="Channel ID">频道ID</th>
+                                <th>创建时间</th>
+                                <th>开始时间</th>
+                                <th>结束时间</th>
+                                <th>来源</th>
+                                <th>直播方式</th>
+                                <th>限时/24小时</th>
+                                <th>观看协议</th>
+                                <th>直播状态</th>
+                                <th>推流状态</th>
+                            </tr>
+                            </thead>
+                            <tbody id="live-list" style="cursor: pointer;">
+
+                            <!--<tr>-->
+                                <!--<td>9696969</td>-->
+                                <!--<td>-->
+                                    <!--<img class="list-thumbnail"-->
+                                         <!--src="http://v.img.pplive.cn/cp308/df/4b/df4b008c5b5b9b8bda2e866158570650/3.jpg">-->
+                                <!--</td>-->
+                                <!--<td>2016-12-25 9:30</td>-->
+                                <!--<td>2016-12-25 18:00</td>-->
+                                <!--<td>第一体育</td>-->
+                                <!--<td>第三方软件</td>-->
+                                <!--<td>正常</td>-->
+                            <!--</tr>-->
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+
+    </div>
+
+    <div v-else transition="" id="livesDetail">
+        <!--<div class="row">-->
+        <div class="box box-solid">
+            <div class="box-body" style="margin-left: 0px; margin-right:0px;">
+                <div class="col-lg-6 col-sm-12">
+                    <div id="livesPlayerCon"></div>
+                </div>
+                <div class="col-lg-6 col-sm-12">
+                    <div class="box-header">
+                        <i class="fa fa-info-circle"></i>
+                        <h3 class="box-title">基本信息</h3>
+                    </div>
+                    <table class="table table-bordered table-hover">
+                        <tbody>
+                        <tr>
+                            <td width="130px">频道ID</td>
+                            <td>{{liveInfo.channelId}}</td>
+                        </tr>
+                        <tr>
+                            <td>内容来源CP</td>
+                            <td>{{cpnameText}}</td>
+                        </tr>
+                        <tr>
+                            <td>直播方式</td>
+                            <td>{{modeText}}</td>
+                        </tr>
+                        <tr>
+                            <td>观看协议</td>
+                            <td>{{liveInfo.watchProtocols}}</td>
+                        </tr>
+                        <tr>
+                            <td>状态</td>
+                            <td>{{livestatusText}}</td>
+                        </tr>
+                        <tr>
+                            <td>创建时间</td>
+                            <td>{{liveInfo.createTime|timeStr}}</td>
+                        </tr>
+                        <tr>
+                            <td>开始时间（原定）</td>
+                            <td>{{liveInfo.startTime|timeStr}}</td>
+                        </tr>
+                        <tr>
+                            <td>开始时间（实际）</td>
+                            <td>{{liveInfo.realStartTime|timeStr}}</td>
+                        </tr>
+                        <tr>
+                            <td>结束时间（原定）</td>
+                            <td>{{liveInfo.endTime|timeStr}}</td>
+                        </tr>
+                        <tr v-show="!(liveInfo.status=='living')">
+                            <td>结束时间（实际）</td>
+                            <td>{{liveInfo.realEndTime|timeStr}}</td>
+                        </tr>
+                        <tr>
+                            <td>rtmp流状态</td>
+                            <td><span
+                                    v-bind:class="{'label-success':rtmpStatusText=='正常', 'label-danger':rtmpStatusText=='错误'}">
+                            {{rtmpStatusText}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>live2流状态</td>
+                            <td><span
+                                    v-bind:class="{'label-success':live2StatusText=='正常', 'label-danger':live2StatusText=='错误'}">
+                            {{live2StatusText}}</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <!--</div>-->
+        <div class="box box-solid">
+            <!--区分推流和拉流显示， 拉流显示拉流地址 状态和rtmpgateIP-->
+            <div v-if="liveInfo.mode=='rtmp'" class="box-body">
+                <div class="col-sm-12">
+                    <div class="box-header">
+                        <i class="fa fa-level-down"></i>
+                        <h3 class="box-title">拉流情况</h3>
+                    </div>
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <th>节点</th>
+                        <th>服务器IP</th>
+                        <th>状态</th>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>切流服务Cutter</td>
+                            <td>{{vmsStreamStatus.server_ip.cutter_ip}}</td>
+                            <td>{{vmsStreamStatus.server_report_status.cutter_input_status}}</td>
+                        </tr>
+                        <tr>
+                            <td>拉流服务rtmpgate</td>
+                            <td>{{vmsStreamStatus.server_ip.rtmpgate_ip}}</td>
+                            <td>{{vmsStreamStatus.server_report_status.rtmpgate_report_status}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div>拉流地址：{{liveInfo.external_url}}</div>
+                </div>
+            </div>
+            <div v-else class="box-body">
+                <div class="col-sm-6">
+                    <div class="box-header">
+                        <i class="fa fa-level-up"></i>
+                        <h3 class="box-title">推流情况</h3>
+                    </div>
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <th>节点</th>
+                        <th>IP地址</th>
+                        <th>推流状态</th>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>切流服务Cutter</td>
+                            <td>{{vmsStreamStatus.server_ip.cutter_ip}}</td>
+                            <td>{{vmsStreamStatus.server_report_status.cutter_input_status}}</td>
+                        </tr>
+                        <tr>
+                            <td>DC</td>
+                            <td>{{vmsStreamStatus.server_ip.dc_ip}}</td>
+                            <td>{{vmsStreamStatus.server_report_status.dc_report_status}}</td>
+                        </tr>
+                        <tr>
+                            <td>ROOT</td>
+                            <td>{{vmsStreamStatus.stream_info[2].ip}}</td>
+                            <td v-if="vmsStreamStatus.stream_info[2].video_bits">ok</td>
+                            <td v-else></td>
+                        </tr>
+                        <tr>
+                            <td>PMS</td>
+                            <td>{{vmsStreamStatus.stream_info[0].ip}}</td>
+                            <td v-if="vmsStreamStatus.stream_info[0].video_bits">ok</td>
+                            <td v-else></td>
+                        </tr>
+                        <tr>
+                            <td>推流终端</td>
+                            <td>{{vmsStreamStatus.server_ip.publish_ip}}</td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div>推流地址：<input type="text" class="form-control input-sm"
+                                     value="{{vmsStreamStatus.publish_url}}"></div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="box-header">
+                        <i class="fa fa-medium"></i>
+                        <h3 class="box-title">推流音视频信息</h3>
+                    </div>
+                    <table class="table table-bordered table-hover">
+                        <tr>
+                            <td width="130">视频编码</td>
+                            <td>{{vmsStreamStatus.stream_info[0].video_codec}}</td>
+                        </tr>
+                        <tr>
+                            <td>视频尺寸</td>
+                            <td>{{vmsStreamStatus.stream_info[0].video_size}}</td>
+                        </tr>
+                        <tr>
+                            <td>视频码率</td>
+                            <td>{{vmsStreamStatus.stream_info[0].video_bits}}</td>
+                        </tr>
+                        <tr>
+                            <td>视频FPS</td>
+                            <td>{{vmsStreamStatus.stream_info[0].video_fps}}</td>
+                        </tr>
+                        <tr>
+                            <td>音频编码</td>
+                            <td>{{vmsStreamStatus.stream_info[0].audio_codec}}</td>
+                        </tr>
+                        <tr>
+                            <td>音频频率</td>
+                            <td>{{vmsStreamStatus.stream_info[0].audio_freq}}</td>
+                        </tr>
+                        <tr>
+                            <td>音频码率</td>
+                            <td>{{vmsStreamStatus.stream_info[0].audio_bits}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

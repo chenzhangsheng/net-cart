@@ -1,0 +1,68 @@
+<div id="logsView" class="" style="">
+    <!-- Content Header (Page header) -->
+    <ol class="breadcrumb">
+        <li class="">
+            <a id="logsHome" href="javascript:void(0);" title="">
+                <i class="fa fa-history fa-2x"></i>
+                <h2 class="inline">系统日志</h2>
+            </a>
+        </li>
+        <!--<li v-show="!showList"class="active">视频详情</li>-->
+    </ol>
+
+
+    <div id="logsSearch">
+        <form class="form-inline search-con" role="form">
+            <div class="form-group">
+                <label for="cidInput" class="">用户名:</label>
+                <input id="cidInput" class="form-control input-sm" type="text" v-model="search.userName" placeholder="豆芽号登录名">
+            </div>
+            <div class="form-group">
+                <label for="createDateSel" class="">时间:</label>
+                <div id="createDateSel" class="input-group" title="">
+                        <span class="add-on input-group-addon"><i
+                                class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+                    <input type="text" name="daterange" class="form-control input-sm date-range">
+                </div>
+            </div>
+
+            <div class="form-group"><input id="btn-search" class="btn btn-block btn-primary btn-sm btn-flat"
+                                           type="button" value="搜索"></div>
+        </form>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <!-- /.box-header -->
+                    <div class="box-body">
+
+                        <table id="logsTable" width="100%" class="table table-striped table-hover table-bordered">
+                            <thead>
+                            <tr>
+                                <th>用户</th>
+                                <th>操作</th>
+                                <th>内容</th>
+                                <th>IP</th>
+                                <th>时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!--<tr v-for="l in logs">-->
+                                <!--<td>{{l.userName}}</td>-->
+                                <!--<td>{{l.operate}}</td>-->
+                                <!--<td>{{l.content}}</td>-->
+                                <!--<td>{{l.ip}}</td>-->
+                                <!--<td>{{l.createTime|timeStr}}</td>-->
+                            <!--</tr>-->
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
