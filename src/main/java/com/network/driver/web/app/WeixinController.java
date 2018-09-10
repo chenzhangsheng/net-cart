@@ -47,9 +47,11 @@ public class WeixinController extends BaseController{
             MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
             String openId = multipartRequest.getParameter("openId");
             String imageId = multipartRequest.getParameter("id");
+            log.info("/upload openId imageId :"+ openId + " "+ imageId);
             if(StringUtils.isNotEmpty(openId)&&
                     StringUtils.isNotEmpty(imageId)){
                 String filepath = FileUpload.uploadFile(file, request);
+                log.info("/upload filepath :"+ filepath);
                 WxUser wxUser = new WxUser();
                 wxUser.setWxId(openId);
                 switch (imageId) {
@@ -86,7 +88,9 @@ public class WeixinController extends BaseController{
     @RequestMapping(value = "/qrcode")
     public ResponseData qrcode(HttpServletRequest request) throws Exception{
         try{
-            return new ResponseData<String>(HttpStatus.OK.value(), "qrcode success", qrCodes.create("pages/index/index").getPath());
+            String codePath = qrCodes.create("pages/index/index").getPath();
+            log.info("/qrcode codePath:"+ codePath);
+            return new ResponseData<String>(HttpStatus.OK.value(), "qrcode success", codePath);
         }catch (WrongReqException e){
             log.warn("getQrcode failure msg: "+e.getMessage());
             return new ResponseData<String>(HttpStatus.INTERNAL_SERVER_ERROR.value(),e.getMessage(),"");
@@ -100,7 +104,9 @@ public class WeixinController extends BaseController{
     public ResponseData login(HttpServletRequest request) throws Exception{
         try{
             JSONObject jsonParam = this.getJSONParam(request);
+            log.info("/login code:"+ jsonParam.getString("code"));
             SessionKey sessionKey = user.code2Session(jsonParam.getString("code"));
+            log.info("/login openId:"+ sessionKey.getOpenId());
             if(sessionKey != null && StringUtils.isNotEmpty(sessionKey.getOpenId())){
                 WxUser wxUser = new WxUser();
                 wxUser.setWxId(sessionKey.getOpenId());
