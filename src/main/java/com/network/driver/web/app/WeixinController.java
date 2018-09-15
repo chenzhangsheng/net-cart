@@ -9,6 +9,7 @@ import com.network.driver.common.weixin.user.User;
 import com.network.driver.exception.WrongReqException;
 import com.network.driver.persistence.WxUserService;
 import com.network.driver.util.FileUpload;
+import com.network.driver.util.WXCore;
 import com.network.driver.web.BaseController;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -158,6 +159,43 @@ public class WeixinController extends BaseController{
             throw new Exception(e.getMessage());
         }
     }
+
+
+    @RequestMapping(value = "/getphone", method = RequestMethod.POST)
+    public ResponseData getPhone(HttpServletRequest request) throws Exception{
+        try{
+            JSONObject jsonParam = this.getJSONParam(request);
+            String encryptedData = jsonParam.getString("encryptedData");
+            String iv = jsonParam.getString("iv");
+            String openId = jsonParam.getString("openId");
+            String sessionKey = jsonParam.getString("sessionKey");
+            log.info("/getphone encryptedData:"+ encryptedData);
+            log.info("/getphone iv:"+ iv);
+            log.info("/getphone openId:"+ openId);
+            log.info("/getphone sessionKey:"+ sessionKey);
+            if(openId != null && StringUtils.isNotEmpty(encryptedData) &&
+                    StringUtils.isNotEmpty(iv)){
+                WxUser wxUser = new WxUser();
+                wxUser.setWxId(openId);
+                String phoneData = WXCore.decrypt(sessionKey,encryptedData,"",iv);
+                JSONObject form = JSONObject.parseObject(phoneData);
+                wxUser.setWxPhone(form.getString("phoneNumber"));
+                String codePath = qrCodes.create("pages/index/index").getPath();
+                wxUser.setQrcodeUrl(codePath);
+                wxUserService.saveOrUpateUser(wxUser);
+                return new ResponseData<String>(HttpStatus.OK.value(), "getphone success",codePath);
+            }else{
+                return new ResponseData<String>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "getPhone fail","");
+            }
+        }catch (WrongReqException e){
+            log.warn("getPhone failure msg: "+e.getMessage());
+            return new ResponseData<String>(HttpStatus.INTERNAL_SERVER_ERROR.value(),e.getMessage(),"");
+        }catch (Exception e){
+            log.error("getPhone failure msg: "+e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
 
 
 }

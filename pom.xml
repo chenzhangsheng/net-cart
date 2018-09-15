@@ -170,7 +170,12 @@
             <artifactId>httpclient</artifactId>
             <version>4.5</version>
         </dependency>
-
+        <!-- 解密工具 -->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk16</artifactId>
+            <version>1.46</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

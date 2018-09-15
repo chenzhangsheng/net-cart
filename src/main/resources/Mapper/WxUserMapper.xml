@@ -6,7 +6,7 @@
          wx_id, wx_name,wx_gender,wx_avatar_url, wx_phone, wx_city,wx_province,
          cart_name,cart_id_number,cart_create_license,cart_number,cart_brand,cart_owner,cart_approve,cart_create_time,
          cart_license_image_front,cart_license_image_back,cart_drive_license_image_front,cart_drive_license_image_back,
-         share_count,create_time, last_modified_time
+         share_count,qrcode_url,create_time, last_modified_time
     </sql>
 
     <select id="getByOpenId" resultType="WxUser">
@@ -34,7 +34,7 @@
         values
         (#{wxId},#{wxName},#{wxGender},#{wxAvatarUrl},#{wxPhone},#{wxCity},#{wxProvince},#{cartName},
         #{cartIdNumber},#{cartCreateLicense},#{cartNumber},#{cartBrand},#{cartOwner},#{cartApprove},#{cartCreateTime},#{cartLicenseImageFront},#{cartLicenseImageBack},#{cartDriveLicenseImageFront},#{cartDriveLicenseImageBack},
-        #{shareCount},CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)
+        #{shareCount},#{qrcodeUrl},CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)
     </insert>
 
     <update id="update" parameterType="WxUser">
@@ -51,7 +51,6 @@
         <if test="wxPhone!=null and wxPhone!=''">wx_phone=#{wxPhone},</if>
         <if test="wxCity!=null and wxCity!=''">wx_city=#{wxCity},</if>
         <if test="wxProvince!=null and wxProvince!=''">wx_province=#{wxProvince},</if>
-
         <if test="cartName!=null and cartName!=''">cart_name=#{cartName},</if>
         <if test="cartIdNumber!=null and cartIdNumber!=''">cart_id_number=#{cartIdNumber},</if>
         <if test="cartCreateLicense!=null and cartCreateLicense!=''">cart_create_license=#{cartCreateLicense},</if>
@@ -65,7 +64,7 @@
 
         <if test="cartDriveLicenseImageFront!=null and cartDriveLicenseImageFront!=''">cart_drive_license_image_front=#{cartDriveLicenseImageFront},</if>
         <if test="cartDriveLicenseImageBack!=null and cartDriveLicenseImageBack!=''">cart_drive_license_image_back=#{cartDriveLicenseImageBack},</if>
-
+        <if test="qrcodeUrl!=null and qrcodeUrl!=''">qrcode_url=#{qrcodeUrl},</if>
         <if test="shareCount>0 ">share_count=#{shareCount},</if>
         last_modified_time=CURRENT_TIMESTAMP
     </sql>

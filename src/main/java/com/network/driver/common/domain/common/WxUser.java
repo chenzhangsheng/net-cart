@@ -34,6 +34,7 @@ public class WxUser {
     private String cartDriveLicenseImageFront;
     private String cartDriveLicenseImageBack;
     private Integer shareCount;
+    private String qrcodeUrl;
     @JsonIgnore
     private Date createTime;
     @JsonIgnore

@@ -12,7 +12,7 @@ spring:
       # 初始化时建立的连接数
       initial-size: 5
       # 最大连接数
-      max-active: 20
+      max-active: 50
       # 最小连接数
       min-idle: 5
       # 获取连接最大等待时间，单位：毫秒
@@ -39,8 +39,8 @@ spring:
           db-type: mysql
           # 打印慢sql
           log-slow-sql: true
-          # 超过200毫秒即为慢sql
-          slow-sql-millis: 200
+          # 超过500毫秒即为慢sql
+          slow-sql-millis: 500
         # sql防火墙
         wall:
           enabled: true

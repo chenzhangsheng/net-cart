@@ -54,9 +54,9 @@ public class QrCodes {
      */
     public File create(String path, int size) throws Exception {
         String url = WxEndpoint.get("url.qrcode.create");
-        String json = "{\"path\": \"%s\", \"width\": %s}";
+        String json = "{\"scene\": \"%s\",\"path\": \"%s\", \"width\": %s}";
         String fileName = UUID.randomUUID().toString();
-        InputStream inputStream = wxClient.copyStream(url, String.format(json, path, size));
+        InputStream inputStream = wxClient.copyStream(url, String.format(json,"oo_4M5GxAVrVMmpoNsMZ4ywBYP6c", path, size));
         File tempFile = new File(FileUtils.getTempDirectory(), fileName);
         FileUtils.copyInputStreamToFile(inputStream, tempFile);
         return tempFile;
