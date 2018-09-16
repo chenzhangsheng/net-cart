@@ -1,6 +1,11 @@
 server:
   port: 9090
 spring:
+  http:
+    multipart:
+      max-file-size: 1000Mb
+    multipart:
+      max-request-size: 1000Mb
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:

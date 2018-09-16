@@ -40,11 +40,11 @@ public class WXCore {
     }
 
 
-//    public static void main(String[] args) throws Exception{
-//        String appId = "wx4f4bc4dec97d474b";
-//        String encryptedData = "CiyLU1Aw2KjvrjMdj8YKliAjtP4gsMZMQmRzooG2xrDcvSnxIMXFufNstNGTyaGS9uT5geRa0W4oTOb1WT7fJlAC+oNPdbB+3hVbJSRgv+4lGOETKUQz6OYStslQ142dNCuabNPGBzlooOmB231qMM85d2/fV6ChevvXvQP8Hkue1poOFtnEtpyxVLW1zAo6/1Xx1COxFvrc2d7UL/lmHInNlxuacJXwu0fjpXfz/YqYzBIBzD6WUfTIF9GRHpOn/Hz7saL8xz+W//FRAUid1OksQaQx4CMs8LOddcQhULW4ucetDf96JcR3g0gfRK4PC7E/r7Z6xNrXd2UIeorGj5Ef7b1pJAYB6Y5anaHqZ9J6nKEBvB4DnNLIVWSgARns/8wR2SiRS7MNACwTyrGvt9ts8p12PKFdlqYTopNHR1Vf7XjfhQlVsAJdNiKdYmYVoKlaRv85IfVunYzO0IKXsyl7JCUjCpoG20f0a04COwfneQAGGwd5oa+T8yO5hzuyDb/XcxxmK01EpqOyuxINew==";
-//        String sessionKey = "tiihtNczf5v6AKRyjwEUhQ==";
-//        String iv = "r7BXXKkLb8qrSNn05n0qiA==";
-//        System.out.println(decrypt(appId, encryptedData, sessionKey, iv));
-//    }
+    public static void main(String[] args) throws Exception{
+        String appId = "wxeb78b3b925ff9dd8";
+        String encryptedData = "bo8H0L5XUzYQOQYmr3wWscVFR/EKVaa/ffLc7tlfhUFQoevpWcgIL8N7xvlUd9A8l6t5SFqIclZOWH4xNKBxDZUE0V86EeqbPnSuwNtKmaGoqhrG5T7pDkRpn1ZefAs+jKXSWQFwRvEpk3AmZTYume/C4aXOU7xmK5N6OUFshol8rEwrF4tA46z4j3B1jy6kM6WkESUm9gbfn48v2JqINQ==";
+        String sessionKey = "Ut2uT+zb9p/VivE8fM5wPw==";
+        String iv = "AJDgxisc12UaK1E8FcLlew==";
+        System.out.println(decrypt(appId, encryptedData, sessionKey, iv));
+    }
 }

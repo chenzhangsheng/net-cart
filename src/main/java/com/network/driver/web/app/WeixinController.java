@@ -1,6 +1,7 @@
 package com.network.driver.web.app;
 
 import com.alibaba.fastjson.JSONObject;
+import com.network.driver.common.AppSetting;
 import com.network.driver.common.domain.common.WxUser;
 import com.network.driver.common.domain.weixin.SessionKey;
 import com.network.driver.common.result.ResponseData;
@@ -40,6 +41,8 @@ public class WeixinController extends BaseController{
     private User user;
     @Autowired
     private WxUserService wxUserService;
+    @Autowired
+    private AppSetting appSetting;
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public ResponseData upload(HttpServletRequest request,
@@ -169,15 +172,12 @@ public class WeixinController extends BaseController{
             String iv = jsonParam.getString("iv");
             String openId = jsonParam.getString("openId");
             String sessionKey = jsonParam.getString("sessionKey");
-            log.info("/getphone encryptedData:"+ encryptedData);
-            log.info("/getphone iv:"+ iv);
-            log.info("/getphone openId:"+ openId);
-            log.info("/getphone sessionKey:"+ sessionKey);
+            log.info("/getphone encryptedData:{},iv:{},openId:{},sessionKey:{}",encryptedData,iv,openId,sessionKey);
             if(openId != null && StringUtils.isNotEmpty(encryptedData) &&
                     StringUtils.isNotEmpty(iv)){
                 WxUser wxUser = new WxUser();
                 wxUser.setWxId(openId);
-                String phoneData = WXCore.decrypt(sessionKey,encryptedData,"",iv);
+                String phoneData = WXCore.decrypt(appSetting.getAppId(),encryptedData,sessionKey,iv);
                 JSONObject form = JSONObject.parseObject(phoneData);
                 wxUser.setWxPhone(form.getString("phoneNumber"));
                 String codePath = qrCodes.create("pages/index/index").getPath();
