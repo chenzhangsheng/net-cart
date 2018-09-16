@@ -25,6 +25,8 @@ public class QrCodes {
 
     static {
         wxClient = AppWxClientFactory.getInstance().defaultWxClient();
+        logger.info("QrCodes wxClient appid:{},secret:{}",wxClient.getClientId(),wxClient.getClientSecret());
+        logger.info("QrCodes wxClient token:{},is expired:{} ",wxClient.getAccessToken().getAccessToken(),wxClient.getAccessToken().expired());
     }
 
 //    public static QrCodes defaultQrCodes() {

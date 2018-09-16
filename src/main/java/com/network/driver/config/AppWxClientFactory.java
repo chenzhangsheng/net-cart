@@ -2,9 +2,12 @@ package com.network.driver.config;
 
 import com.network.driver.common.AppSetting;
 import com.network.driver.common.weixin.WxEndpoint;
+import com.network.driver.web.app.WeixinController;
 import com.riversoft.weixin.common.AccessTokenHolder;
 import com.riversoft.weixin.common.DefaultAccessTokenHolder;
 import com.riversoft.weixin.common.WxClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +22,7 @@ public class AppWxClientFactory {
 
     private static AppWxClientFactory instance = null;
     private static ConcurrentHashMap<String, WxClient> wxClients = new ConcurrentHashMap<>();
+    private static final Logger log = LoggerFactory.getLogger(AppWxClientFactory.class);
 
     private AppWxClientFactory() {
     }
@@ -41,6 +45,7 @@ public class AppWxClientFactory {
 
             AccessTokenHolder accessTokenHolder = null;
             if(clazz == null || "".equals(clazz)) {
+                log.info("accessTokenHolder AppId:{},Secret:{}",appSetting.getAppId(),appSetting.getSecret());
                 accessTokenHolder = new DefaultAccessTokenHolder(url, appSetting.getAppId(), appSetting.getSecret());
             } else {
                 try {
