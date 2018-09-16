@@ -119,8 +119,13 @@ jwt:
     # 密钥
     base64Security: greedystar_base64Security
 
+#weixin:
+#  appId: wxeb78b3b925ff9dd8
+#  secret: 654cf6056c5e8161adde325e409577dd
+#  token: wonskd113n
+#  aesKey: lRE3qfnBHxqzBE5i12v6CzU257ERsOIeMKqfDPdFu5c
 weixin:
-  appId: wxeb78b3b925ff9dd8
-  secret: 654cf6056c5e8161adde325e409577dd
+  appId: wxa13bb45d82a8eca0
+  secret: 319f1daec1eb6148059184337326c5b1
   token: wonskd113n
   aesKey: lRE3qfnBHxqzBE5i12v6CzU257ERsOIeMKqfDPdFu5c
