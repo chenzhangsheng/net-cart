@@ -14,10 +14,10 @@ public class AppSetting {
 
     private static Logger logger = LoggerFactory.getLogger(AppSetting.class);
     private static AppSetting appSetting = null;
-    private static String appId;
-    private static String secret;
-    private static String token;
-    private static String aesKey;
+    private static String appId = "wxeb78b3b925ff9dd8";
+    private static String secret = "654cf6056c5e8161adde325e409577dd";
+    private static String token = "wonskd113n";
+    private static String aesKey = "lRE3qfnBHxqzBE5i12v6CzU257ERsOIeMKqfDPdFu5c";
     private String tokenHolderClass;
 
     public AppSetting() {
