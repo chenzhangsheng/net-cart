@@ -56,7 +56,10 @@ public class QrCodes {
         String url = WxEndpoint.get("url.qrcode.create");
         String json = "{\"scene\": \"%s\",\"path\": \"%s\", \"width\": %s}";
         String fileName = UUID.randomUUID().toString();
+        logger.info("create qrCode:{}",String.format(json,openId, path, size));
         InputStream inputStream = wxClient.copyStream(url, String.format(json,openId, path, size));
+        logger.info("create inputStream:{}",inputStream);
+        logger.info("create File path:{}",FileUtils.getTempDirectory().getPath());
         File tempFile = new File(FileUtils.getTempDirectory(), fileName);
         FileUtils.copyInputStreamToFile(inputStream, tempFile);
         return tempFile;
