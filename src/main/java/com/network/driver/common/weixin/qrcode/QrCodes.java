@@ -2,6 +2,7 @@ package com.network.driver.common.weixin.qrcode;
 
 import com.network.driver.common.weixin.WxEndpoint;
 import com.network.driver.config.AppWxClientFactory;
+import com.network.driver.util.FileUpload;
 import com.riversoft.weixin.common.WxClient;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -44,7 +45,7 @@ public class QrCodes {
      * @param path, path 需要在 app.json 的 pages 中定义
      * @return
      */
-    public File create(String path,String openId) throws Exception{
+    public String create(String path,String openId) throws Exception{
         return create(path, 430,openId);
     }
 
@@ -54,16 +55,15 @@ public class QrCodes {
      * @param size
      * @return
      */
-    public File create(String path, int size,String openId) throws Exception {
+    public String create(String path, int size,String openId) throws Exception {
         String url = WxEndpoint.get("url.qrcode.create");
-        String json = "{\"scene\": \"%s\",\"path\": \"%s\", \"width\": %s}";
-        String fileName = UUID.randomUUID().toString();
+        String json = "{\"scene\": \"%s\",\"page\": \"%s\", \"width\": %s}";
         logger.info("create qrCode:{}",String.format(json,openId, path, size));
         InputStream inputStream = wxClient.copyStream(url, String.format(json,openId, path, size));
-        logger.info("create inputStream:{}",inputStream);
-        logger.info("create File path:{}",FileUtils.getTempDirectory().getPath());
-        File tempFile = new File(FileUtils.getTempDirectory(), fileName);
-        FileUtils.copyInputStreamToFile(inputStream, tempFile);
-        return tempFile;
+        String qrCodePath = FileUpload.upFileFileInputStream(inputStream);
+        logger.info("create File path:{}",qrCodePath);
+//        File tempFile = new File(FileUtils.getTempDirectory(), fileName);
+//        FileUtils.copyInputStreamToFile(inputStream, tempFile);
+        return qrCodePath;
     }
 }

@@ -8,4 +8,5 @@ import com.network.driver.common.domain.common.WxUser;
 public interface WxUserService {
 
     void saveOrUpateUser (WxUser wxUser);
+    WxUser getByOpenId(String openId);
 }

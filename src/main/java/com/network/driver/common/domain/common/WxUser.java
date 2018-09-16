@@ -1,6 +1,7 @@
 package com.network.driver.common.domain.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.network.driver.common.domain.weixin.SessionKey;
 import lombok.Data;
 import java.util.Date;
 import javax.persistence.*;
@@ -33,8 +34,9 @@ public class WxUser {
     private String cartLicenseImageBack;
     private String cartDriveLicenseImageFront;
     private String cartDriveLicenseImageBack;
-    private Integer shareCount;
+    private int shareCount;
     private String qrcodeUrl;
+    private SessionKey sessionKey;
     @JsonIgnore
     private Date createTime;
     @JsonIgnore

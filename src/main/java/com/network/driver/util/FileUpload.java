@@ -66,21 +66,27 @@ public class FileUpload {
 		return "http://" + bucketName + ".oss-cn-shanghai.aliyuncs.com/" + key;
 	}
 
-	public static String upFileFileNoPress(MultipartFile file,
-			HttpServletRequest request) throws IOException {
-		long time = System.currentTimeMillis();
-		String fileName = String.valueOf(time) + "-" + file.getOriginalFilename();
+	public static String upFileFileInputStream(InputStream inputStream) throws IOException {
 		String endpoint = OSS_ENDPOINT;
 		String accessKeyId = ACCESS_ID;
 		String accessKeySecret = ACCESS_KEY;
 		String bucketName = BUCKET_NAME;
 		System.out.println("创建OSSClient之前");
 		OSSClient client = new OSSClient(endpoint, accessKeyId, accessKeySecret);
-		String key =  UUID.randomUUID().toString() + fileName;
+		String key =  UUID.randomUUID().toString();
 		try {
-			uploadFile(client, bucketName, key, file, false,request);
+			ObjectMetadata objectMeta = new ObjectMetadata();
+			client.putObject(bucketName, key, inputStream, objectMeta);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					logger.error("uploadFile close  inputStream error:" + e);
+				}
+			}
 		}
 		client.shutdown();
 		return "http://" + bucketName + ".oss-cn-shanghai.aliyuncs.com/" + key;

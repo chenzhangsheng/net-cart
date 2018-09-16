@@ -112,10 +112,16 @@ public class WeixinController extends BaseController{
             SessionKey sessionKey = user.code2Session(jsonParam.getString("code"));
             log.info("/login openId:"+ sessionKey.getOpenId());
             if(sessionKey != null && StringUtils.isNotEmpty(sessionKey.getOpenId())){
-                WxUser wxUser = new WxUser();
-                wxUser.setWxId(sessionKey.getOpenId());
-                wxUserService.saveOrUpateUser(wxUser);
-                return new ResponseData<SessionKey>(HttpStatus.OK.value(), "get openid success",sessionKey);
+                WxUser wxUser = wxUserService.getByOpenId(sessionKey.getOpenId());
+                if(wxUser != null){
+                    wxUser.setSessionKey(sessionKey);
+                }else{
+                    wxUser = new WxUser();
+                    wxUser.setWxId(sessionKey.getOpenId());
+                    wxUser.setSessionKey(sessionKey);
+                    wxUserService.saveOrUpateUser(wxUser);
+                }
+                return new ResponseData<WxUser>(HttpStatus.OK.value(), "get openid success",wxUser);
             }else{
                 return new ResponseData<String>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "get openid fail","");
             }
@@ -136,7 +142,7 @@ public class WeixinController extends BaseController{
             if(jsonParam != null){
                 WxUser wxUser = new WxUser();
                 JSONObject form = JSONObject.parseObject(jsonParam.getString("form_data"));
-                wxUser.setCartBrand(form.getString("vehcleBrand"));
+                wxUser.setCartBrand(form.getString("vehicleBrand"));
                 wxUser.setCartApprove(form.getString("vechileApprovedPerson"));
                 wxUser.setCartName(form.getString("name"));
                 wxUser.setCartNumber(form.getString("vehicleNumber"));
@@ -181,7 +187,7 @@ public class WeixinController extends BaseController{
                 log.info("/getphone phoneData:{}",phoneData);
                 JSONObject form = JSONObject.parseObject(phoneData);
                 wxUser.setWxPhone(form.getString("phoneNumber"));
-                String codePath = qrCodes.create("pages/index/index",openId).getPath();
+                String codePath = qrCodes.create("pages/index/index",openId);
                 log.info("/getphone codePath:{}",codePath);
                 wxUser.setQrcodeUrl(codePath);
                 wxUserService.saveOrUpateUser(wxUser);
@@ -198,6 +204,51 @@ public class WeixinController extends BaseController{
         }
     }
 
+    @RequestMapping(value = "/updateCount", method = RequestMethod.POST)
+    public ResponseData updateCount(HttpServletRequest request) throws Exception{
+        try{
+            JSONObject jsonParam = this.getJSONParam(request);
+            String openId = jsonParam.getString("openId");
+            log.info("/updateCount openId:{}",openId);
+            if(openId != null && StringUtils.isNotEmpty(openId)){
+                WxUser wxUser = wxUserService.getByOpenId(openId);
+                if(wxUser != null){
+                    wxUser.setShareCount(wxUser.getShareCount()+1);
+                    wxUserService.saveOrUpateUser(wxUser);
+                }
+                return new ResponseData<String>(HttpStatus.OK.value(), "updateCount success","");
+            }else{
+                return new ResponseData<String>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "updateCount fail","");
+            }
+        }catch (WrongReqException e){
+            log.warn("updateCount failure msg: "+e.getMessage());
+            return new ResponseData<String>(HttpStatus.INTERNAL_SERVER_ERROR.value(),e.getMessage(),"");
+        }catch (Exception e){
+            log.error("updateCount failure msg: "+e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
 
+    @RequestMapping(value = "/getCount", method = RequestMethod.POST)
+    public ResponseData getCount(HttpServletRequest request) throws Exception{
+        try{
+            JSONObject jsonParam = this.getJSONParam(request);
+            String openId = jsonParam.getString("openId");
+            log.info("/getCount openId:{}",openId);
+            if(openId != null && StringUtils.isNotEmpty(openId)){
+                WxUser wxUser = wxUserService.getByOpenId(openId);
+                if(wxUser != null){
+                    return new ResponseData<Integer>(HttpStatus.OK.value(), "updateCount success",wxUser.getShareCount());
+                }
+            }
+            return new ResponseData<Integer>(HttpStatus.OK.value(), "updateCount success",0);
 
+        }catch (WrongReqException e){
+            log.warn("updateCount failure msg: "+e.getMessage());
+            return new ResponseData<String>(HttpStatus.INTERNAL_SERVER_ERROR.value(),e.getMessage(),"");
+        }catch (Exception e){
+            log.error("updateCount failure msg: "+e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
 }

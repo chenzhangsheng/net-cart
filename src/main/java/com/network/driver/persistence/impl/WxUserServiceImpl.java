@@ -31,4 +31,14 @@ public class WxUserServiceImpl implements WxUserService {
             throw new WrongReqException("wxUser user is null");
         }
     }
+
+    @Override
+    public WxUser getByOpenId(String openId) {
+        if( openId != null || !StringUtils.isEmpty(openId)){
+            WxUser user = wxUserDao.getByOpenId(openId);
+           return  user;
+        }else{
+            return null;
+        }
+    }
 }
