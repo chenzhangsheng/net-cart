@@ -1,9 +1,13 @@
 server:
   port: 9090
-  tomcat:
-    maxHttpHeaderSize: 10240000
-    maxHttpPostSize: 10240000
+#  tomcat:
+#    maxHttpHeaderSize: 10240000
+#    maxHttpPostSize: 10240000
 spring:
+  servlet:
+    multipart:
+      max-file-size: 30Mb
+      max-request-size: 30Mb
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:

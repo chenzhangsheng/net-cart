@@ -99,9 +99,7 @@ public class FileUpload {
                                    String Objectkey, MultipartFile filename, boolean isPress,
 								   HttpServletRequest request) throws OSSException,
 			ClientException, FileNotFoundException,IOException{
-//		String path= request.getContextPath();
-//		System.out.println("path="+path);
-		File file =new File("D:\\upload",Objectkey);
+		File file =new File("/home",Objectkey);
 		filename.transferTo(file);
 //		CommonsMultipartFile commonsMultipartFile = (CommonsMultipartFile) filename;
 //		DiskFileItem diskFileItem = (DiskFileItem) commonsMultipartFile
