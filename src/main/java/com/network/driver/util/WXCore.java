@@ -42,9 +42,9 @@ public class WXCore {
 
     public static void main(String[] args) throws Exception{
         String appId = "wxeb78b3b925ff9dd8";
-        String encryptedData = "bo8H0L5XUzYQOQYmr3wWscVFR/EKVaa/ffLc7tlfhUFQoevpWcgIL8N7xvlUd9A8l6t5SFqIclZOWH4xNKBxDZUE0V86EeqbPnSuwNtKmaGoqhrG5T7pDkRpn1ZefAs+jKXSWQFwRvEpk3AmZTYume/C4aXOU7xmK5N6OUFshol8rEwrF4tA46z4j3B1jy6kM6WkESUm9gbfn48v2JqINQ==";
-        String sessionKey = "Ut2uT+zb9p/VivE8fM5wPw==";
-        String iv = "AJDgxisc12UaK1E8FcLlew==";
+        String encryptedData = "XFHGrLRVkUmJivfvo/8WJsRTl5zwAfd9hw+jd72cv76h9SxPDO9bb/tNepvzxyRZUqRbujM997IJ0EIjmcV2OTyQX0OrywVhgOw2t8Q9g8w9t0nrKg8KbkZ1KR3udoRy1rVZz5QkQ3WiWWMXuKrtZwH2IqgTsN7gfGpbfY9M6+KxrmMGwEPLMFi9ESA3Y9zn1gPn9r1I3OFQup7C8XzkMQ==";
+        String sessionKey = "FSTgLF7+3TLuOeBUI6pFQQ==";
+        String iv = "C+Gdecfg0EfnwnHO2EF2EA==";
         System.out.println(decrypt(appId, encryptedData, sessionKey, iv));
     }
 }

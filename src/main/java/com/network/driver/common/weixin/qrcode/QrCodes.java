@@ -42,8 +42,8 @@ public class QrCodes {
      * @param path, path 需要在 app.json 的 pages 中定义
      * @return
      */
-    public File create(String path) throws Exception{
-        return create(path, 430);
+    public File create(String path,String openId) throws Exception{
+        return create(path, 430,openId);
     }
 
     /**
@@ -52,11 +52,11 @@ public class QrCodes {
      * @param size
      * @return
      */
-    public File create(String path, int size) throws Exception {
+    public File create(String path, int size,String openId) throws Exception {
         String url = WxEndpoint.get("url.qrcode.create");
         String json = "{\"scene\": \"%s\",\"path\": \"%s\", \"width\": %s}";
         String fileName = UUID.randomUUID().toString();
-        InputStream inputStream = wxClient.copyStream(url, String.format(json,"oo_4M5GxAVrVMmpoNsMZ4ywBYP6c", path, size));
+        InputStream inputStream = wxClient.copyStream(url, String.format(json,openId, path, size));
         File tempFile = new File(FileUtils.getTempDirectory(), fileName);
         FileUtils.copyInputStreamToFile(inputStream, tempFile);
         return tempFile;

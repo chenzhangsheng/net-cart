@@ -88,21 +88,21 @@ public class WeixinController extends BaseController{
     @ApiImplicitParams({
             @ApiImplicitParam(name = "openId", dataType = "String", paramType = "query")
     })
-    @PostMapping
-    @RequestMapping(value = "/qrcode")
-    public ResponseData qrcode(HttpServletRequest request) throws Exception{
-        try{
-            String codePath = qrCodes.create("pages/index/index").getPath();
-            log.info("/qrcode codePath:"+ codePath);
-            return new ResponseData<String>(HttpStatus.OK.value(), "qrcode success", codePath);
-        }catch (WrongReqException e){
-            log.warn("getQrcode failure msg: "+e.getMessage());
-            return new ResponseData<String>(HttpStatus.INTERNAL_SERVER_ERROR.value(),e.getMessage(),"");
-        }catch (Exception e){
-            log.error("getQrcode failure msg: "+e.getMessage());
-            throw new Exception(e.getMessage());
-        }
-    }
+//    @PostMapping
+//    @RequestMapping(value = "/qrcode")
+//    public ResponseData qrcode(HttpServletRequest request) throws Exception{
+//        try{
+//            String codePath = qrCodes.create("pages/index/index").getPath();
+//            log.info("/qrcode codePath:"+ codePath);
+//            return new ResponseData<String>(HttpStatus.OK.value(), "qrcode success", codePath);
+//        }catch (WrongReqException e){
+//            log.warn("getQrcode failure msg: "+e.getMessage());
+//            return new ResponseData<String>(HttpStatus.INTERNAL_SERVER_ERROR.value(),e.getMessage(),"");
+//        }catch (Exception e){
+//            log.error("getQrcode failure msg: "+e.getMessage());
+//            throw new Exception(e.getMessage());
+//        }
+//    }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseData login(HttpServletRequest request) throws Exception{
@@ -172,15 +172,17 @@ public class WeixinController extends BaseController{
             String iv = jsonParam.getString("iv");
             String openId = jsonParam.getString("openId");
             String sessionKey = jsonParam.getString("sessionKey");
-            log.info("/getphone encryptedData:{},iv:{},openId:{},sessionKey:{}",encryptedData,iv,openId,sessionKey);
+            log.info("/getphone encryptedData:{},iv:{},openId:{},sessionKey:{} appId:{}",encryptedData,iv,openId,sessionKey,appSetting.getAppId());
             if(openId != null && StringUtils.isNotEmpty(encryptedData) &&
                     StringUtils.isNotEmpty(iv)){
                 WxUser wxUser = new WxUser();
                 wxUser.setWxId(openId);
                 String phoneData = WXCore.decrypt(appSetting.getAppId(),encryptedData,sessionKey,iv);
+                log.info("/getphone phoneData:{}",phoneData);
                 JSONObject form = JSONObject.parseObject(phoneData);
                 wxUser.setWxPhone(form.getString("phoneNumber"));
-                String codePath = qrCodes.create("pages/index/index").getPath();
+                String codePath = qrCodes.create("pages/index/index",openId).getPath();
+                log.info("/getphone codePath:{}",codePath);
                 wxUser.setQrcodeUrl(codePath);
                 wxUserService.saveOrUpateUser(wxUser);
                 return new ResponseData<String>(HttpStatus.OK.value(), "getphone success",codePath);
