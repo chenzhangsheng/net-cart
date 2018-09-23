@@ -63,7 +63,7 @@ public class FileUpload {
 		} finally {
 			client.shutdown();
 		}
-		return "http://" + bucketName + ".oss-cn-shanghai.aliyuncs.com/" + key;
+		return "https://" + bucketName + ".oss-cn-shanghai.aliyuncs.com/" + key;
 	}
 
 	public static String upFileFileInputStream(InputStream inputStream) throws IOException {
