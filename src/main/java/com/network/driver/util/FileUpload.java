@@ -89,7 +89,7 @@ public class FileUpload {
 			}
 		}
 		client.shutdown();
-		return "http://" + bucketName + ".oss-cn-shanghai.aliyuncs.com/" + key;
+		return "https://" + bucketName + ".oss-cn-shanghai.aliyuncs.com/" + key;
 	}
 	/**
 	 * @param client
