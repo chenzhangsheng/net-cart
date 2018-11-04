@@ -8,6 +8,8 @@ import com.network.driver.persistence.dao.WxUserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * Created by ChenZhangsheng on 2018/9/2.
  */
@@ -40,5 +42,10 @@ public class WxUserServiceImpl implements WxUserService {
         }else{
             return null;
         }
+    }
+
+    @Override
+    public List<WxUser> getUserList() {
+        return wxUserDao.getList();
     }
 }

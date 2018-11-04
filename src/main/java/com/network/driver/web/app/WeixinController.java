@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ChenZhangsheng on 2018/8/25.
@@ -251,4 +252,18 @@ public class WeixinController extends BaseController{
             throw new Exception(e.getMessage());
         }
     }
+
+    @RequestMapping(value = "/getUser", method = RequestMethod.POST)
+    public ResponseData getUser(HttpServletRequest request) throws Exception{
+        try{
+            return new ResponseData<List<WxUser>>(HttpStatus.OK.value(), "updateCount success",wxUserService.getUserList());
+        }catch (WrongReqException e){
+            log.warn("getUser failure msg: "+e.getMessage());
+            return new ResponseData<String>(HttpStatus.INTERNAL_SERVER_ERROR.value(),e.getMessage(),"");
+        }catch (Exception e){
+            log.error("getUser failure msg: "+e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
 }

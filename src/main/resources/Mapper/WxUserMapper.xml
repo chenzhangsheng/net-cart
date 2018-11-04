@@ -15,11 +15,13 @@
         FROM user WHERE wx_id = #{wxId}
     </select>
 
-    <select id="findUserList" resultType="WxUser">
+    <select id="getList" resultType="WxUser">
         SELECT
         <include refid="Base_Column_List"/>
-        FROM admin
+        FROM user
     </select>
+
+
 
     <insert id="save" parameterType="WxUser">
 
