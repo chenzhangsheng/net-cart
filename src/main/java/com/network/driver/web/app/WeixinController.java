@@ -253,7 +253,7 @@ public class WeixinController extends BaseController{
         }
     }
 
-    @RequestMapping(value = "/getUser", method = RequestMethod.POST)
+    @RequestMapping(value = "/getUser")
     public ResponseData getUser(HttpServletRequest request) throws Exception{
         try{
             return new ResponseData<List<WxUser>>(HttpStatus.OK.value(), "updateCount success",wxUserService.getUserList());
